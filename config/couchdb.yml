@@ -1,6 +1,7 @@
 development:
-	protocol: 'https'
-	host: winesimple-ecom.cloudant.com
-	port: 443
-	username: somedowspecturnightfuree
-	password: J7Ip4EavxsNbc4hABKTTJkhr
+  protocol: 'https'
+  host: winesimple-ecom.cloudant.com
+  port: 443
+  prefix: database
+  username: somedowspecturnightfuree
+  password: J7Ip4EavxsNbc4hABKTTJkhr
