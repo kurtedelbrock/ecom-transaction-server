@@ -1,5 +1,7 @@
 class User < CouchRest::Model::Base
 
+  validates :email, uniqueness: true, allow_nil: true
+
 	property :first_name, String
 	property :last_name, String
 	
@@ -21,10 +23,15 @@ class User < CouchRest::Model::Base
 	design do
 		view :list, :map => "function(doc) { emit (doc._id, doc) }"
     view :by_token, :map => "function(doc) { if (doc.token) { emit(doc.token, doc); } }"
+    view :by_email, :map => "function(doc) { if (doc.email) { emit(doc.email, doc); } }"
 	end
   
   def find_by_token(token=nil)
     User.by_token.key(token).rows
+  end
+  
+  def find_by_email(email=nil)
+    User.by_email.key(email).rows
   end
 	
 end
