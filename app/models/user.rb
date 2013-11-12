@@ -7,6 +7,7 @@ class User < CouchRest::Model::Base
 	property :quiz_answers,			QuizAnswer, :array => true
 	property :shipping_address, 	Address
 	property :billing_address, 	Address
+	property :transactions,			Transaction, :array => true
 	
 	timestamps!
 	
