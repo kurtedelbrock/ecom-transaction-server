@@ -4,4 +4,8 @@ class UsersController < ApplicationController
 		@users = User.list.all
 	end
 	
+	def show
+		@user = User.get(params[:id])
+	end
+	
 end
