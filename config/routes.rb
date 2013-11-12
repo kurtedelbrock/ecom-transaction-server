@@ -1,5 +1,9 @@
 EcomTransactionServer::Application.routes.draw do
 	
+  resources :accounts do
+    post 'login', on: :collection
+  end
+
 	resources :users
 	
   # The priority is based upon order of creation: first created -> highest priority.
