@@ -10,6 +10,4 @@ class Address < CouchRest::Model::Base
 	
 	timestamps!
 	
-	property :object_type, String, :default => "address", :read_only => true
-	
 end

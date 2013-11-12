@@ -8,8 +8,6 @@ class User < CouchRest::Model::Base
 	property :shipping_address, 	Address
 	property :billing_address, 	Address
 	
-	property :object_type,				String, :default => "user", :read_only => true
-	
 	timestamps!
 	
 end
