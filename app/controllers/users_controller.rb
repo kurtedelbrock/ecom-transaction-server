@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	
-protect_from_forgery :except => [:create, :update]
+protect_from_forgery :except => [:create, :update, :destroy]
 	
 	def index
 		@users = User.list.all
@@ -21,7 +21,12 @@ protect_from_forgery :except => [:create, :update]
   end
 	
 	def destroy
-		
+		@user = User.get(params[:id])
+    if @user.destroy
+      render status: :ok, nothing: true
+    else
+      render status: :internal_server_error, nothing: true
+    end
 	end
 	
 end
