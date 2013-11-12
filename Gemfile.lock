@@ -28,13 +28,15 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     builder (3.1.4)
-    connection_pool (1.0.0)
-    couchbase (1.3.3)
-      connection_pool (~> 1.0.0)
+    couchrest (1.1.3)
+      mime-types (~> 1.15)
       multi_json (~> 1.0)
-      yaji (~> 0.3.2)
-    couchbase-model (0.5.3)
-      couchbase (~> 1.3.0)
+      rest-client (~> 1.6.1)
+    couchrest_model (2.0.0)
+      activemodel (>= 3.0)
+      couchrest (~> 1.1.3)
+      mime-types (>= 1.15)
+      tzinfo (>= 0.3.22)
     erubis (2.7.0)
     hike (1.2.3)
     i18n (0.6.5)
@@ -68,6 +70,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
@@ -88,13 +92,12 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    yaji (0.3.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  couchbase-model
+  couchrest_model
   jbuilder (~> 1.2)
   rails (= 4.0.1)
   sdoc
