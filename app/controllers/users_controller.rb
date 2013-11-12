@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	
 	def index
-		render text: "Hello"
+		@users = User.list.all
 	end
 	
 end

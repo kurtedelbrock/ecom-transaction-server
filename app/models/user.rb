@@ -14,4 +14,8 @@ class User < CouchRest::Model::Base
 	
 	timestamps!
 	
+	design do
+		view :list, :map => "function(doc) { emit (doc._id, doc) }"
+	end
+	
 end
