@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
       @user = User.find_by_token token
       @user
     end
+    cors_set_access_control_headers
   end
   
   def cors_set_access_control_headers
