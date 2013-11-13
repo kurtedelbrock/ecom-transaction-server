@@ -6,13 +6,10 @@ class AccountsController < ApplicationController
   
   def create
     
-    if params[:email].blank? or params[:password].blank?
-      render nothing: true, status: :unprocessable_entity and return
-    end
-    
     @user = User.new(params)
     @user.token = SecureRandom.hex
-    @user.password = BCrypt::Password.create params[:password]
+    
+    @user.password = BCrypt::Password.create params[:password] if @user.password
 
     if !@user.save
       render nothing: true, status: :internal_server_error
