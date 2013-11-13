@@ -13,8 +13,6 @@ class ApplicationController < ActionController::Base
       @user
     end
     
-    cors_set_access_control_headers
-    
   end
   
   def cors_set_access_control_headers
