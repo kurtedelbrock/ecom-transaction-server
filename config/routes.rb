@@ -1,5 +1,7 @@
 EcomTransactionServer::Application.routes.draw do
 	
+  match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
+  
   resources :accounts, defaults: {format: :json} do
     post 'login', on: :collection, defaults: {format: :json}
     match 'login', on: :collection, :action => 'options', :via => :options
