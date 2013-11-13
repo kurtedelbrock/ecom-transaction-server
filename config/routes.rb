@@ -4,7 +4,7 @@ EcomTransactionServer::Application.routes.draw do
   
   resources :accounts, defaults: {format: :json} do
     post 'login', on: :collection, defaults: {format: :json}
-    match 'login', on: :collection, :action => 'options', :via => :options
+    # match 'login', on: :collection, :action => 'options', :via => :options
   end
 
 	resources :users, defaults: {format: :json}
@@ -14,7 +14,7 @@ EcomTransactionServer::Application.routes.draw do
   
   resources :quiz_answers, defaults: {format: :json}
   
-  match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
+  # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
