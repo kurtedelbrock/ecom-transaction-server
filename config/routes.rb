@@ -1,15 +1,15 @@
 EcomTransactionServer::Application.routes.draw do
 	
-  resources :accounts do
-    post 'login', on: :collection
+  resources :accounts, defaults: {format: :json} do
+    post 'login', on: :collection, defaults: {format: :json}
   end
 
-	resources :users
-  resources :billing_address
-  resources :shipping_address
-  resources :transactions
+	resources :users, defaults: {format: :json}
+  resources :billing_address, defaults: {format: :json}
+  resources :shipping_address, defaults: {format: :json}
+  resources :transactions, defaults: {format: :json}
   
-  resources :quiz_answers
+  resources :quiz_answers, defaults: {format: :json}
 	
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
