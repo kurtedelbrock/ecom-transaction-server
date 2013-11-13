@@ -5,6 +5,8 @@ EcomTransactionServer::Application.routes.draw do
   end
 
 	resources :users
+  
+  resource :quiz_answers
 	
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

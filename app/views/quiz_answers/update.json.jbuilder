@@ -1,0 +1,1 @@
+json.(@answer, :question_number, :answer_number)
