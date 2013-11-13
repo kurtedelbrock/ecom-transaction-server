@@ -15,7 +15,6 @@ class TransactionsController < ApplicationController
     
     @user.transactions.delete_at index
     render nothing: true, status: :ok if @user.save
-    
   end
   
 end

@@ -6,4 +6,9 @@ class ShippingAddressController < ApplicationController
     @user.save
   end
   
+  def destroy
+    @user.shipping_address = nil
+    render nothing: true, status: :ok if @user.save
+  end
+  
 end

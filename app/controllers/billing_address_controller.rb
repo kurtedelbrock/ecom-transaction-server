@@ -6,4 +6,9 @@ class BillingAddressController < ApplicationController
     @user.save
   end
   
+  def destroy
+    @user.billing_address = nil
+    render nothing: true, status: :ok if @user.save
+  end
+  
 end
