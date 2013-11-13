@@ -3,7 +3,7 @@ require 'bcrypt'
 class AccountsController < ApplicationController
   
   protect_from_forgery :except => [:create]
-  skip_before_filter :authenticate, only: [:create, :options]
+  skip_before_filter :authenticate, only: [:create, :options, :login]
   
   def create
     
