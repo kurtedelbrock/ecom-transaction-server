@@ -1,0 +1,1 @@
+json.(@address, :street_address, :secondary_street_address, :city, :state, :zip, :country)
