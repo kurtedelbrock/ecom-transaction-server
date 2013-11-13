@@ -2,6 +2,7 @@ EcomTransactionServer::Application.routes.draw do
 	
   resources :accounts, defaults: {format: :json} do
     post 'login', on: :collection, defaults: {format: :json}
+    match 'login', on: :collection, :action => 'options', :via => :options
   end
 
 	resources :users, defaults: {format: :json}
