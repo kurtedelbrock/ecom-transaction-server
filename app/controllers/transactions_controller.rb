@@ -1,5 +1,9 @@
 class TransactionsController < ApplicationController
   
+  def index
+    @transactions = Transaction.all_transactions.rows
+  end
+  
   def create
     @transaction = Transaction.new(params)
     @transaction.transaction_timestamp = DateTime.now
