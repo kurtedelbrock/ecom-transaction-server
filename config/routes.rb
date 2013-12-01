@@ -14,6 +14,8 @@ EcomTransactionServer::Application.routes.draw do
   
   resources :quiz_answers, defaults: {format: :json}
   
+  get 'uuid' => 'uuid#show'
+  
   # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	
   # The priority is based upon order of creation: first created -> highest priority.

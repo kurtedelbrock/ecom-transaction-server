@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	
 protect_from_forgery :except => [:create, :update, :destroy]
-skip_before_filter :authenticate, only: [:index]
+skip_before_filter :authenticate, only: [:index, :create]
 	
 	def index
 		@users = User.list.all
