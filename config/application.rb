@@ -30,6 +30,8 @@ module EcomTransactionServer
     # Disable the asset pipeline.
     config.assets.enabled = false
     
+    config.middleware.insert_before ActionDispatch::Flash, "AuthParser"
+    
     config.middleware.use Rack::Cors do
       allow do
         origins '*'

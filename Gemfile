@@ -5,6 +5,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'couchrest_model'
 gem 'bcrypt-ruby'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'warden'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

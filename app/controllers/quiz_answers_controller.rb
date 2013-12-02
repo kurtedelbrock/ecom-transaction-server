@@ -1,16 +1,14 @@
 class QuizAnswersController < ApplicationController
   # users/:user_id/quiz_answers/:question_id
-  skip_before_filter :authenticate, only: [:update]
   
-  def update
+  def create
+    # do authentication
+    env['warden'].authenticate! :scope => :unregistered
+    @user = env['warden'].user
+    
     # map params
-    uuid = params[:id]
     question_number = params[:question_number]
     answer_number = params[:answer_number]
-    
-    # get the user by the UUID
-    @user = User.by_uuid.key(uuid).first
-    render nothing: true, status: :not_found and return if @user == nil
     
     # validate that the quiz question and quiz answer exist in the request
     render nothing: true, status: :bad_request and return if question_number == nil && answer_number == nil
