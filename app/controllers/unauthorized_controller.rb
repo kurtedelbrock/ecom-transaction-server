@@ -6,7 +6,6 @@ class UnauthorizedController < ApplicationController
   end
   
   def respond
-    puts env["warden"].message
     if env["warden"].message == "uuid"
       response.headers["X-Required-Role"] = "unregistered"
       response.headers["Link"] = '</users>; rel="authentication"; method="POST"'

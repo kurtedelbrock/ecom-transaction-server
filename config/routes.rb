@@ -16,6 +16,9 @@ EcomTransactionServer::Application.routes.draw do
   
   get 'uuid' => 'uuid#show'
   
+  match '/quiz_answers', :controller => 'quiz_answers', :action => 'options', :via => :options
+  match '/users', :controller => 'users', :action => 'options', :via => :options
+  
   # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	
   # The priority is based upon order of creation: first created -> highest priority.

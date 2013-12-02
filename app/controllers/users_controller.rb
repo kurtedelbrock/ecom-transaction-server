@@ -34,5 +34,9 @@ skip_before_filter :authenticate, only: [:index, :create]
       render status: :internal_server_error, nothing: true
     end
 	end
+  
+  def options
+    render nothing: true, status: :ok
+  end
 	
 end

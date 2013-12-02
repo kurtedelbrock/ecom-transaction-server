@@ -13,15 +13,27 @@ Rails.configuration.middleware.insert_after AuthParser, Warden::Manager do |mana
   
 end
 
+Warden::Manager.serialize_into_session do |user|
+  nil
+end
+
+Warden::Manager.serialize_from_session do |id|
+  nil
+end
+
 Warden::Strategies.add(:uuid) do
   
-  def valid?
-    env['AUTHORIZATION_TYPE'] == "uuid" and env['AUTHORIZATION_TOKEN']
-  end
-  
   def authenticate!
-    user = User.find_by_uuid env['AUTHORIZATION_TOKEN']
-    user.nil? ? fail!("uuid") : success!(user)
+    if env['AUTHORIZATION_TYPE'] != "uuid" or env['AUTHORIZATION_TOKEN'] == nil
+      fail!("uuid") and return
+    end
+    user = User.by_uuid.key(env['AUTHORIZATION_TOKEN']).first
+
+    if user.nil?
+      fail!("uuid") and return
+    else
+      success!(user)
+    end
   end
   
 end
