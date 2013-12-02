@@ -32,11 +32,14 @@ module EcomTransactionServer
     
     config.middleware.insert_after ActionDispatch::Flash, "AuthParser"
     
-    config.middleware.use Rack::Cors do
+    config.middleware.insert_before "AuthParser", Rack::Cors do
       allow do
         origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        resource '*',
+        :headers => :any,
+        :methods => [:get, :post, :options]
       end
     end
+    
   end
 end
