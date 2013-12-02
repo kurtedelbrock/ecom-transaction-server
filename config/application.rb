@@ -31,15 +31,7 @@ module EcomTransactionServer
     config.assets.enabled = false
     
     config.middleware.insert_after ActionDispatch::Flash, "AuthParser"
-    
-    config.middleware.insert_before "AuthParser", Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-        :headers => :any,
-        :methods => [:get, :post, :options]
-      end
-    end
+    config.middleware.insert_before ActionDispatch::Static, "Cors"
     
   end
 end
