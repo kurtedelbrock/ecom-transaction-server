@@ -5,10 +5,27 @@ class TransactionsController < ApplicationController
   end
   
   def create
-    @transaction = Transaction.new(params)
-    @transaction.transaction_timestamp = DateTime.now
-    @transaction.transaction_guid = SecureRandom.hex
+    # do authentication for uuid scope
+    env['warden'].authenticate! :scope => :unregistered
+    @user = env['warden'].user
+    
+    # Bail out if @user validation fails
+    render nothing: true, status: :unprocessable_entity and return if !@user.validate_for_transaction params
+    
+    # Perform validation and update model data
+    @user.update_from_transaction! params
+    
+    # Perform password hashing and token generation
+    @user.generate_password! params[:password]
+    @user.generate_token!
+    
+    # Create transaction object
+    @transaction = Transaction.populate_with_automatic_data
+    @transaction.product_id = params[:product_id]
+    
+    # Append the transaction object to the document
     @user.transactions << @transaction
+    debugger
     @user.save
   end
 
@@ -19,6 +36,10 @@ class TransactionsController < ApplicationController
     
     @user.transactions.delete_at index
     render nothing: true, status: :ok if @user.save
+  end
+  
+  def options
+    render nothing: true, status: :ok
   end
   
 end
