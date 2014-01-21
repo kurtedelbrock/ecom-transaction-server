@@ -15,8 +15,6 @@ class User < CouchRest::Model::Base
 	property :wine_api_id, Integer
 	
 	property :quiz_answers,	QuizAnswer, :array => true
-	property :shipping_address,	Address
-	property :billing_address, Address
 	property :transactions, Transaction, :array => true
 	
 	timestamps!
@@ -38,14 +36,6 @@ class User < CouchRest::Model::Base
   
   def validate_for_transaction(params)
     params[:first_name] && params[:last_name] && params[:shipping_primary_address] && params[:shipping_city] && params[:shipping_zip_code] && params[:email] && params[:password]
-  end
-  
-  def params_have_shipping_address?(params)
-    params[:shipping_primary_address] && params[:shipping_city] && params[:zip_code]
-  end
-  
-  def params_have_billing_address?(params)
-    params[:billing_primary_address] && params[:billing_city] && params[:billing_zip_code]
   end
   
   def update_from_transaction!(params)

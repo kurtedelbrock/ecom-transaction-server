@@ -11,9 +11,21 @@ class TransactionsController < ApplicationController
     product = Product.for_id params[:product_id]
     
     
-    if product.charge params[:stripe_token]
+    if charge = product.charge(params[:stripe_token])
       # The card was successfully charged, so add the transaction to the database
       
+      @transaction = Transaction.populate_with_automatic_data
+      @transaction.ingest_params params
+      @transaction.charge = Charge.ingest_params charge
+      
+      @user = User.new
+      @user.transactions << @transaction
+      @user.save
+      
+      render status: :internatl_server_error and return unless @user.persisted?
+      
+    else
+      render status: :internal_server_error
     end
     
     render nothing: true
