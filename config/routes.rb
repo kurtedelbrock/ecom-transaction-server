@@ -5,6 +5,8 @@ EcomTransactionServer::Application.routes.draw do
     # match 'login', on: :collection, :action => 'options', :via => :options
   end
 
+  resources :captures, defaults: {format: :json}
+
 	resources :users, defaults: {format: :json}
   
   resources :billing_address, defaults: {format: :json}
@@ -18,6 +20,7 @@ EcomTransactionServer::Application.routes.draw do
   match '/quiz_answers', :controller => 'quiz_answers', :action => 'options', :via => :options
   match '/users', :controller => 'users', :action => 'options', :via => :options
   match '/transactions', :controller => 'transactions', :action => 'options', :via => :options
+  match '/captures', :controller => 'captures', :action => 'options', :via => :options
   
   # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	
