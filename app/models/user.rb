@@ -16,6 +16,11 @@ class User < CouchRest::Model::Base
 	
 	property :quiz_answers,	QuizAnswer, :array => true
 	property :transactions, Transaction, :array => true
+  property :wines, Wine, array: true
+  
+  property :favorite_wine, String
+  
+  validates_uniqueness_of :email
 	
 	timestamps!
 	
@@ -27,6 +32,7 @@ class User < CouchRest::Model::Base
 	end
   
   def find_by_token(token=nil)
+    debugger
     User.by_token.key(token).rows
   end
   
@@ -53,6 +59,12 @@ class User < CouchRest::Model::Base
   
   def generate_token!
     self.token = SecureRandom.hex
+  end
+  
+  def find_wine_by_id(wine_id)
+    self.wines.find do |wine|
+      wine.uuid == wine_id
+    end
   end
 	
 end

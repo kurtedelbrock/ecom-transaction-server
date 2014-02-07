@@ -49,7 +49,7 @@ class Product
   # Shipping helper
   
   def shipping
-    return 100
+    return 0
   end
   
   # Charge card

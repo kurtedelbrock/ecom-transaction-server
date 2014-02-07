@@ -12,11 +12,11 @@ skip_before_filter :authenticate, only: [:index, :create]
   end
   
   def create
-	  @user = User.new(params)
-    
-    if params[:uuid].nil?
-      @user.uuid = SecureRandom.uuid
-    end
+	  @user = User.new
+
+    @user.token = SecureRandom.uuid
+    @user.uuid = SecureRandom.uuid
+    @user.email = SecureRandom.uuid
     
 	  @user.save
 	end

@@ -1,5 +1,9 @@
 EcomTransactionServer::Application.routes.draw do
 	
+  resources :wines, defaults: {format: :json} do
+    resources :tags, defaults: {format: :json}
+  end
+
   resources :accounts, defaults: {format: :json} do
     post 'login', on: :collection, defaults: {format: :json}
     # match 'login', on: :collection, :action => 'options', :via => :options
@@ -7,7 +11,9 @@ EcomTransactionServer::Application.routes.draw do
 
   resources :captures, defaults: {format: :json}
 
-	resources :users, defaults: {format: :json}
+	resources :users, defaults: {format: :json} do
+    resources :favorites, defaults: {format: :json}
+  end
   
   resources :billing_address, defaults: {format: :json}
   resources :shipping_address, defaults: {format: :json}
@@ -21,6 +27,18 @@ EcomTransactionServer::Application.routes.draw do
   match '/users', :controller => 'users', :action => 'options', :via => :options
   match '/transactions', :controller => 'transactions', :action => 'options', :via => :options
   match '/captures', :controller => 'captures', :action => 'options', :via => :options
+  match '/accounts', :controller => 'accounts', :action => 'options', :via => :options
+  match '/tags', :controller => 'tags', :action => 'options', :via => :options
+  match '/wines/:id/tags/:id', :controller => 'wines', :action => 'options', :via => :options
+  match '/wines/:id/tags', :controller => 'wines', :action => 'options', :via => :options
+  match '/users/:id/favorites', :controller => 'wines', :action => 'options', :via => :options
+  match '/wines', :controller => 'wines', :action => 'options', :via => :options
+  match '/wines/:id', :controller => 'wines', :action => 'options', :via => :options
+  match '/transactions/:id', :controller => 'wines', :action => 'options', :via => :options
+  match '/accounts/login', :controller => 'accounts', :action => 'options', :via => :options
+  
+  match '/accounts/admin/login', controller: 'accounts', action: 'admin_login', via: :post
+  match '/accounts/admin/login', controller: 'accounts', action: 'options', via: :options
   
   # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	

@@ -1,0 +1,1 @@
+json.(@wine, :uuid, :wine_id, :wine_name)

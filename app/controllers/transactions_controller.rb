@@ -1,7 +1,18 @@
+require 'mandrill'
+
 class TransactionsController < ApplicationController
+  
+  before_action :authenticate, only: :create
+  before_action :authenticate_admin, only: [:index]
   
   def index
     @transactions = Transaction.all_transactions.rows
+  end
+  
+  def show
+    @user = Transaction.all_transactions.key params[:id]
+    @transaction = @user.first.transactions.find {|transaction| transaction.transaction_guid == params[:id]}
+    @user = @user.first
   end
   
   def create
@@ -9,20 +20,55 @@ class TransactionsController < ApplicationController
     # Assume that we'll receive the product id and the 
     
     product = Product.for_id params[:product_id]
+    product.price = params[:charge_price]
     
     
     if charge = product.charge(params[:stripe_token])
       # The card was successfully charged, so add the transaction to the database
       
       @transaction = Transaction.populate_with_automatic_data
+      
       @transaction.ingest_params params
       @transaction.charge = Charge.ingest_params charge
       
-      @user = User.new
+      # set email and password
+      @user.email = params[:email]
+      @user.password = BCrypt::Password.create params[:password]
+      @user.token = Digest::SHA1.hexdigest([Time.now, rand].join)
+      
       @user.transactions << @transaction
       @user.save
       
-      render status: :internatl_server_error and return unless @user.persisted?
+      # Send a confirmation email
+      
+      m = Mandrill::API.new "TL7k2OAn9CsrWwa_1eTDBA"
+      message = {
+        to: [{
+          email: @user.email,
+          name: "#{@user.first_name} #{@user.last_name}",
+          type: "to"
+        }],
+        bcc_address: "team@winesimple.com",
+        merge: true,
+        merge_vars: [
+          {
+            rcpt: @user.email,
+            vars: [
+              {
+                name: "fname",
+                content: @user.first_name
+              }
+            ]
+          }
+        ],
+        tags: [
+          "order-confirmation"
+        ]
+      }
+      
+      sending = m.messages.send_template("Order Confirmation", "", message)
+      
+      render status: :internal_server_error and return unless @user.persisted?
       
     else
       render status: :internal_server_error

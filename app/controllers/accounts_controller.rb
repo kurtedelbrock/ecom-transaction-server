@@ -2,7 +2,7 @@ require 'bcrypt'
 
 class AccountsController < ApplicationController
   
-  protect_from_forgery :except => [:create, :options, :login]
+  protect_from_forgery :except => [:create, :options, :login, :admin_login]
   skip_before_filter :authenticate, only: [:create, :options, :login]
   
   def create
@@ -24,20 +24,24 @@ class AccountsController < ApplicationController
     
     @user = User.find_by_email(params[:email])
     
-    render nothing: true, status: :unauthorized and return if !@user
+    render nothing: true, status: :internal_server_error and return if !@user
     
     if (!BCrypt::Password.new(@user.password).is_password? params[:password])
-      render nothing: true, status: :unauthorized and return
+      render nothing: true, status: :internal_server_error and return
     end
     
   end
   
   def options
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version, Content-Type, Authorization'
-    headers['Access-Control-Max-Age'] = '1728000'
-    render :text => '', :content_type => 'text/plain'
+    render nothing: true, status: :ok
+  end
+  
+  def admin_login
+    if params[:email] == "admin@winesimple.com" and params[:password] == "Win35impl3!"
+      render json: {token: "0dBhH1x5PQKmYTxDQDlKlOF0/Us4u7+NSH5+KLTJupc="}
+    else
+      render nothing: true, status: :internal_server_error
+    end
   end
   
 end

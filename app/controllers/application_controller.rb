@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def authenticate_admin
+    authenticate_or_request_with_http_token do |token, options|
+      token == "0dBhH1x5PQKmYTxDQDlKlOF0/Us4u7+NSH5+KLTJupc="
+    end
+  end
+  
 end

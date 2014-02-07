@@ -1,11 +1,9 @@
 class QuizAnswersController < ApplicationController
   # users/:user_id/quiz_answers/:question_id
   
+  before_action :authenticate, only: :create
+  
   def create
-    # do authentication
-    env['warden'].authenticate! :scope => :unregistered
-    @user = env['warden'].user
-    
     # map params
     question_number = params[:question_number]
     answer_number = params[:answer_number]
