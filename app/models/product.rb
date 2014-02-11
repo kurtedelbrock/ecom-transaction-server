@@ -54,7 +54,7 @@ class Product
   
   # Charge card
   def charge(token)
-    Stripe.api_key = "sk_test_ZgaxorKc4yvnksAe9VLvZPIP"
+    Stripe.api_key = "sk_live_vTc0Sw4njOkQOK2oTL0uxl0o"
     Stripe::Charge.create(amount: self.price, currency: "usd", card: token, description: self.description)
   end
   
