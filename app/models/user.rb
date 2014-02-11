@@ -7,6 +7,7 @@ class User < CouchRest::Model::Base
 	property :last_name, String
 	
 	property :birth_date,	Date
+  property :phone_number, String
   
   property :email, String
   property :password, String

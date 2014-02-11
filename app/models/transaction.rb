@@ -7,6 +7,7 @@ class Transaction < CouchRest::Model::Base
   
   property :first_name, String
   property :last_name, String
+  property :phone_number, String
   
 	property :shipping_address,	Address
 	property :billing_address, Address
@@ -31,6 +32,7 @@ class Transaction < CouchRest::Model::Base
     
     self.first_name = params[:first_name]
     self.last_name = params[:last_name]
+    self.phone_number = params[:phone_number]
     
     self.shipping_address = Address.build_shipping_address params
     self.billing_address = Address.build_billing_address params
