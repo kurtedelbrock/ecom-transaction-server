@@ -18,7 +18,7 @@ class TransactionsController < ApplicationController
   def create
     
     # Assume that we'll receive the product id and the 
-    
+    puts params[:product_id]
     product = Product.for_id params[:product_id]
     product.price = params[:charge_price]
     
