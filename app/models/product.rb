@@ -6,7 +6,6 @@ class Product
   # Create wine product based on wine id
   
   def self.for_id(id)
-    debugger
     case id
     when 1
       return Product.red_wine_only
