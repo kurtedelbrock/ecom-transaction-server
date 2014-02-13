@@ -7,11 +7,11 @@ class Product
   
   def self.for_id(id)
     case id
-    when 1
+    when "1"
       return Product.red_wine_only
-    when 2
+    when "2"
       return Product.white_wine_only
-    when 3
+    when "3"
       return Product.mixed_wine
     end
   end
