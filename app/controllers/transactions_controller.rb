@@ -66,7 +66,32 @@ class TransactionsController < ApplicationController
         ]
       }
       
+      message2 = {
+        to: [{
+          email: "team@winesimple.com",
+          name: "#{@user.first_name} #{@user.last_name}",
+          type: "to"
+        }],
+        bcc_address: "team@winesimple.com",
+        merge: true,
+        merge_vars: [
+          {
+            rcpt: @user.email,
+            vars: [
+              {
+                name: "fname",
+                content: @user.first_name
+              }
+            ]
+          }
+        ],
+        tags: [
+          "order-confirmation"
+        ]
+      }
+      
       sending = m.messages.send_template("Order Confirmation", "", message)
+      sending = m.messages.send_template("Order Confirmation", "", message2)
       
       render status: :internal_server_error and return unless @user.persisted?
       
