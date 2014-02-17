@@ -22,6 +22,13 @@ class TransactionsController < ApplicationController
     product = Product.for_id params[:product_id]
     product.price = params[:charge_price]
     
+    @user.email = params[:email]
+    
+    unless @user.save
+      render status: :internal_server_error and return
+    end
+      
+    
     
     if charge = product.charge(params[:stripe_token])
       # The card was successfully charged, so add the transaction to the database

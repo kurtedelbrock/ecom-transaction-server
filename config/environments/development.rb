@@ -19,5 +19,7 @@ EcomTransactionServer::Application.configure do
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
+  # Set Stripe to test mode
+  ENV["STRIPE_API_KEY"] = "sk_test_ZgaxorKc4yvnksAe9VLvZPIP"
 
 end

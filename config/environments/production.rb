@@ -62,4 +62,7 @@ EcomTransactionServer::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+  
+  # Set Stripe to test mode
+  ENV["STRIPE_API_KEY"] = "sk_live_vTc0Sw4njOkQOK2oTL0uxl0o"
 end
