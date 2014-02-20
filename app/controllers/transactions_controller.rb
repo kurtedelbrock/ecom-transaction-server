@@ -49,10 +49,11 @@ class TransactionsController < ApplicationController
       # Send a confirmation email
       
       m = Mandrill::API.new "TL7k2OAn9CsrWwa_1eTDBA"
+      n = Mandrill::API.new "TL7k2OAn9CsrWwa_1eTDBA"
       message = {
         to: [{
           email: @user.email,
-          name: "#{@user.first_name} #{@user.last_name}",
+          name: "#{@transaction.first_name} #{@transaction.last_name}",
           type: "to"
         }],
         bcc_address: "team@winesimple.com",
@@ -73,32 +74,21 @@ class TransactionsController < ApplicationController
         ]
       }
       
-      message2 = {
-        to: [{
-          email: "team@winesimple.com",
-          name: "#{@user.first_name} #{@user.last_name}",
-          type: "to"
-        }],
-        bcc_address: "team@winesimple.com",
-        merge: true,
-        merge_vars: [
-          {
-            rcpt: @user.email,
-            vars: [
-              {
-                name: "fname",
-                content: @user.first_name
-              }
-            ]
-          }
-        ],
-        tags: [
-          "order-confirmation"
-        ]
-      }
+      message2 = {  
+       :subject=> "Alert: New Order",  
+       :from_name=> "Your name",  
+       :text=>"<html>#{@transaction.first_name} #{@transaction.last_name}</html>",  
+       :to=>[  
+         {  
+           :email=> "team@winesimple.com",  
+           :name=> "Recipient1"  
+         }  
+       ],  
+       :html=>"<html>#{@transaction.first_name} #{@transaction.last_name}<br><br>#{@transaction}</html>"
+      }  
       
       sending = m.messages.send_template("Order Confirmation", "", message)
-      sending = m.messages.send_template("Order Confirmation", "", message2)
+      sending = n.messages.send(message2)
       
       render status: :internal_server_error and return unless @user.persisted?
       
