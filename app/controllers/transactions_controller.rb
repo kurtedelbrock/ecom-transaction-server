@@ -13,6 +13,7 @@ class TransactionsController < ApplicationController
     @user = Transaction.all_transactions.key params[:id]
     @transaction = @user.first.transactions.find {|transaction| transaction.transaction_guid == params[:id]}
     @user = @user.first
+    
   end
   
   def create
@@ -22,13 +23,14 @@ class TransactionsController < ApplicationController
     product = Product.for_id params[:product_id]
     product.price = params[:charge_price]
     
-    @user.email = params[:email]
+    if @user.transactions.count == 0
+      debugger
+      @user.email = params[:email]
     
-    unless @user.save
-      render status: :internal_server_error and return
+      unless @user.save
+        render status: :internal_server_error and return
+      end
     end
-      
-    
     
     if charge = product.charge(params[:stripe_token])
       # The card was successfully charged, so add the transaction to the database
@@ -38,10 +40,12 @@ class TransactionsController < ApplicationController
       @transaction.ingest_params params
       @transaction.charge = Charge.ingest_params charge
       
-      # set email and password
-      @user.email = params[:email]
-      @user.password = BCrypt::Password.create params[:password]
-      @user.token = Digest::SHA1.hexdigest([Time.now, rand].join)
+      if @user.transactions.count == 0
+        # set email and password
+        @user.email = params[:email]
+        @user.password = BCrypt::Password.create params[:password]
+        @user.token = Digest::SHA1.hexdigest([Time.now, rand].join)
+      end
       
       @user.transactions << @transaction
       @user.save
