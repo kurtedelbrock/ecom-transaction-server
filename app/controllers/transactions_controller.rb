@@ -24,7 +24,6 @@ class TransactionsController < ApplicationController
     product.price = params[:charge_price]
     
     if @user.transactions.count == 0
-      debugger
       @user.email = params[:email]
     
       unless @user.save
@@ -44,7 +43,6 @@ class TransactionsController < ApplicationController
         # set email and password
         @user.email = params[:email]
         @user.password = BCrypt::Password.create params[:password]
-        @user.token = Digest::SHA1.hexdigest([Time.now, rand].join)
       end
       
       @user.transactions << @transaction
