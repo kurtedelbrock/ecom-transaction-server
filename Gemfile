@@ -6,6 +6,7 @@ gem 'couchrest_model'
 gem 'bcrypt-ruby'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'warden'
+gem 'httparty'
 
 gem 'stripe'
 gem 'gibbon'

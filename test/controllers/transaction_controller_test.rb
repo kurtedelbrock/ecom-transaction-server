@@ -1,7 +1,5 @@
 require 'test_helper'
 
 class TransactionControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # these tests suck in that they rely on pre-existing data, but oh well...
 end

@@ -30,10 +30,15 @@ class User < CouchRest::Model::Base
     view :by_token, :map => "function(doc) { if (doc.token) { emit(doc.token, doc); } }"
     view :by_email, :map => "function(doc) { if (doc.email) { emit(doc.email, doc); } }"
     view :by_uuid, :map => "function(doc) { if (doc.uuid) { emit(doc.uuid, doc); } }"
+    view :quiz_answers_by_token, :map => "function(doc) { if (doc.token !== null && doc.token !== undefined) { doc.quiz_answers.forEach(function(entry) { emit([doc.token, entry.question_number], {'question_number': entry.question_number, 'answer_number' :   entry.answer_number}); }); } }", :reduce => "function(keys, values, rereduce) { if (rereduce) { return values.slice(-1)[0]; } else { return values.slice(-1)[0]; } }" 
 	end
   
+  def find_quiz_answers_by_token(token=nil)
+    return nil if token == nil
+    return User.quiz_answers_by_token.startkey([token]).endkey([token, {}]).rows
+  end
+  
   def find_by_token(token=nil)
-    debugger
     User.by_token.key(token).rows
   end
   

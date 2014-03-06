@@ -132,6 +132,7 @@ DEPENDENCIES
   couchrest_model
   debugger
   gibbon
+  httparty
   jbuilder (~> 1.2)
   mandrill-api
   rack-cors

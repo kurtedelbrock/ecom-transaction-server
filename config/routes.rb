@@ -18,11 +18,13 @@ EcomTransactionServer::Application.routes.draw do
   resources :billing_address, defaults: {format: :json}
   resources :shipping_address, defaults: {format: :json}
   resources :transactions, defaults: {format: :json}
+  resources :recommendations, defaults: {format: :json}
   
   resources :quiz_answers, defaults: {format: :json}
   
   get 'uuid' => 'uuid#show'
   
+  match '/recommendations', :controller => 'recommendations', :action => 'options', :via => :options
   match '/quiz_answers', :controller => 'quiz_answers', :action => 'options', :via => :options
   match '/users', :controller => 'users', :action => 'options', :via => :options
   match '/transactions', :controller => 'transactions', :action => 'options', :via => :options

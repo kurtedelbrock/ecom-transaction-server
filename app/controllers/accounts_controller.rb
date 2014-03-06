@@ -6,7 +6,6 @@ class AccountsController < ApplicationController
   skip_before_filter :authenticate, only: [:create, :options, :login]
   
   def create
-    debugger
     @user = User.new(params)
     @user.token = SecureRandom.hex
     
