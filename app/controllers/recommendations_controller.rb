@@ -40,7 +40,7 @@ class RecommendationsController < ApplicationController
       packingAnswer2 = "a"
     elsif packing2-1 == 5
       packingAnswer2 = "b"
-    elsif $scope.packing2-1 == 6
+    elsif packing2-1 == 6
       packingAnswer2 = "c"
     else
       packingAnswer2 = "d"
