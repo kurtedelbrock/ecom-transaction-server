@@ -20,7 +20,7 @@ EcomTransactionServer::Application.configure do
   config.active_support.deprecation = :log
 
   # Set Stripe to test mode
-  #ENV["STRIPE_API_KEY"] = "sk_live_vTc0Sw4njOkQOK2oTL0uxl0o"
-  ENV["STRIPE_API_KEY"] = "sk_test_ZgaxorKc4yvnksAe9VLvZPIP"
+  ENV["STRIPE_API_KEY"] = "sk_live_vTc0Sw4njOkQOK2oTL0uxl0o"
+  # ENV["STRIPE_API_KEY"] = "sk_test_ZgaxorKc4yvnksAe9VLvZPIP"
 
 end
