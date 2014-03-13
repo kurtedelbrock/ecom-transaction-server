@@ -4,17 +4,37 @@ class WinesController < ApplicationController
   before_action :authenticate_admin, only: [:create, :destroy]
   
   def create
-    render nothing: true, status: :unprocessable_entity and return if params[:wine_id].nil? or params[:wine_name].nil?
     
     @user = Transaction.all_transactions.key(params[:user_id]).first
     
-    @wine = Wine.new
-    @wine.uuid = Digest::SHA1.hexdigest([Time.now, rand].join)
-    @wine.wine_id = params[:wine_id]
-    @wine.wine_name = params[:wine_name]
+    if params[:wines]
+      # Bulk
+      params[:wines].each do |wine|
+        
+        render nothing: true, status: :unprocessable_entity and return if wine["wine_id"].nil? or wine["wine_name"].nil?
+        
+        @wine = Wine.new
+        @wine.uuid = Digest::SHA1.hexdigest([Time.now, rand].join)
+        @wine.wine_id = wine["wine_id"]
+        @wine.wine_name = wine["wine_name"]
     
-    @user.wines << @wine
-    @user.save
+        @user.wines << @wine
+      end
+      
+      @user.save
+      
+    elsif !params[:wine_id].nil? and !params[:wine_name].nil?    
+      @wine = Wine.new
+      @wine.uuid = Digest::SHA1.hexdigest([Time.now, rand].join)
+      @wine.wine_id = params[:wine_id]
+      @wine.wine_name = params[:wine_name]
+    
+      @user.wines << @wine
+      @user.save
+    else
+      render nothing: true, status: :unprocessable_entity and return
+    end
+
   end
   
   def index

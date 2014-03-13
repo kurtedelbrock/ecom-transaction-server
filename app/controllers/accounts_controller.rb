@@ -22,7 +22,7 @@ class AccountsController < ApplicationController
     end
     
     @user = User.find_by_email(params[:email])
-    
+
     render nothing: true, status: :internal_server_error and return if !@user
     
     if (!BCrypt::Password.new(@user.password).is_password? params[:password])

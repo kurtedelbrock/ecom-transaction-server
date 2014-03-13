@@ -20,6 +20,7 @@ class User < CouchRest::Model::Base
   property :wines, Wine, array: true
   
   property :favorite_wine, String
+  property :reset_password, TrueClass
   
   validates_uniqueness_of :email
 	
@@ -28,10 +29,14 @@ class User < CouchRest::Model::Base
 	design do
 		view :list, :map => "function(doc) { emit (doc._id, doc) }"
     view :by_token, :map => "function(doc) { if (doc.token) { emit(doc.token, doc); } }"
-    view :by_email, :map => "function(doc) { if (doc.email) { emit(doc.email, doc); } }"
+    view :by_email, :map => "function(doc) { if (doc.email !== undefined) { emit(doc.email, doc); } }"
     view :by_uuid, :map => "function(doc) { if (doc.uuid) { emit(doc.uuid, doc); } }"
     view :quiz_answers_by_token, :map => "function(doc) { if (doc.token !== null && doc.token !== undefined) { doc.quiz_answers.forEach(function(entry) { emit([doc.token, entry.question_number], {'question_number': entry.question_number, 'answer_number' :   entry.answer_number}); }); } }", :reduce => "function(keys, values, rereduce) { if (rereduce) { return values.slice(-1)[0]; } else { return values.slice(-1)[0]; } }" 
 	end
+  
+  def find_by_email(email=nil)
+    return User.by_email.key(params[:user_id]).first
+  end
   
   def find_quiz_answers_by_token(token=nil)
     return nil if token == nil

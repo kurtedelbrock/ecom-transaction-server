@@ -13,6 +13,8 @@ EcomTransactionServer::Application.routes.draw do
 
 	resources :users, defaults: {format: :json} do
     resources :favorites, defaults: {format: :json}
+    resources :reset, only: [:create], defaults: {format: :json}
+    resources :password, only: [:update], defaults: {format: :json}
   end
   
   resources :billing_address, defaults: {format: :json}
@@ -23,6 +25,9 @@ EcomTransactionServer::Application.routes.draw do
   resources :quiz_answers, defaults: {format: :json}
   
   get 'uuid' => 'uuid#show'
+  
+  match '/users/:user_id/recommendations/generate/:product_id', :controller => 'recommendations', :action => 'auto_generate', :via => :get, defaults: {format: :json}
+  match '/users/:user_id/recommendations/generate/:product_id', :controller => 'accounts', :action => 'options', :via => :options, defaults: {format: :json}
   
   match '/recommendations', :controller => 'recommendations', :action => 'options', :via => :options
   match '/quiz_answers', :controller => 'quiz_answers', :action => 'options', :via => :options
@@ -41,6 +46,8 @@ EcomTransactionServer::Application.routes.draw do
   
   match '/accounts/admin/login', controller: 'accounts', action: 'admin_login', via: :post
   match '/accounts/admin/login', controller: 'accounts', action: 'options', via: :options
+  match '/users/:id/reset', controller: 'accounts', action: 'options', via: :options
+  match '/users/:id/password/:pass', controller: 'accounts', action: 'options', via: :options
   
   # match "*all" => "application#cors_preflight_check", :constraints => { :method => "OPTIONS" }, :via => :options
 	
