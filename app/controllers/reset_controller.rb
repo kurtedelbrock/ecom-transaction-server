@@ -3,8 +3,8 @@ require 'mandrill'
 class ResetController < ApplicationController
   def create
     
-    params[:user_id].sub! "+", "."
-    
+    params[:user_id].gsub! "+", "."
+    debugger
     @user = User.find_by_email params[:user_id]
     
     # Guard for no user found
@@ -25,11 +25,13 @@ class ResetController < ApplicationController
       merge: true,
       merge_vars: [
         {
-          rcpt: params[:user_id], vars: [{name: "email", content: params[:user_id]}]
+          rcpt: params[:user_id], vars: [{name: "email", content: params[:user_id].gsub(".", "+")}]
         }
       ],
       tags: ["password-reset"]
     }
+    
+    debugger
     
     sending = m.messages.send_template("Reset Password", "", message)
 
