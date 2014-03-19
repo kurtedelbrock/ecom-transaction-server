@@ -53,6 +53,13 @@ class WinesController < ApplicationController
         wine.rating = params[:rating] unless params[:rating].nil?
         wine.comment = params[:comment] unless params[:comment].nil?
         
+        unless params[:rating].nil?
+          url = "http://whispering-falls-1789.herokuapp.com/ratings/create?uuid=#{@user.uuid}&wine_id=#{wine.wine_id}&rating=#{wine.rating}"
+          
+          response = HTTParty.post(url)
+          debugger
+        end
+        
         @wine = wine
       end
     }

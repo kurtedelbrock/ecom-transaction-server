@@ -221,7 +221,7 @@ class RecommendationsController < ApplicationController
     response["wines"].each do |wine|
       @wine = Wine.new
       @wine.uuid = Digest::SHA1.hexdigest([Time.now, rand].join)
-      @wine.wine_id = wine["id"]
+      @wine.wine_id = wine["wine_id"]
       @wine.wine_name = wine["name"]
   
       @user.wines << @wine
