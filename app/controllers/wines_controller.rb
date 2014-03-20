@@ -42,14 +42,17 @@ class WinesController < ApplicationController
   end
   
   def update
-    uuid = params[:id]
+    if params[:id] == nil
+      uuid = params[:wine_id]
+    else
+      uuid = params[:id]
     
     @wine = nil
     
     @user.wines.each { |wine|
       if wine.uuid == uuid
         wine.wine_name = params[:wine_name] unless params[:wine_name].nil?
-        wine.wine_id = params[:wine_id] unless params[:wine_id].nil?
+        wine.wine_id = params[:wine_id] unless uuid.nil?
         wine.rating = params[:rating] unless params[:rating].nil?
         wine.comment = params[:comment] unless params[:comment].nil?
         
