@@ -46,6 +46,7 @@ class WinesController < ApplicationController
       uuid = params[:wine_id]
     else
       uuid = params[:id]
+    end
     
     @wine = nil
     
