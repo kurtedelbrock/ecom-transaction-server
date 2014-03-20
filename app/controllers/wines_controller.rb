@@ -52,7 +52,7 @@ class WinesController < ApplicationController
     @user.wines.each { |wine|
       if wine.uuid == uuid
         wine.wine_name = params[:wine_name] unless params[:wine_name].nil?
-        wine.wine_id = params[:wine_id] unless uuid.nil?
+        wine.wine_id = uuid unless uuid.nil?
         wine.rating = params[:rating] unless params[:rating].nil?
         wine.comment = params[:comment] unless params[:comment].nil?
         
