@@ -42,18 +42,13 @@ class WinesController < ApplicationController
   end
   
   def update
-    if params[:id] == nil
-      uuid = params[:wine_id]
-    else
-      uuid = params[:id]
-    end
     
     @wine = nil
     
     @user.wines.each { |wine|
-      if wine.uuid == uuid
+      if wine.uuid == params[:id]
         wine.wine_name = params[:wine_name] unless params[:wine_name].nil?
-        wine.wine_id = uuid unless uuid.nil?
+        wine.wine_id = params[:wine_id] unless params[:wine_id].nil?
         wine.rating = params[:rating] unless params[:rating].nil?
         wine.comment = params[:comment] unless params[:comment].nil?
         
@@ -61,7 +56,7 @@ class WinesController < ApplicationController
           url = "http://whispering-falls-1789.herokuapp.com/ratings/create?uuid=#{@user.uuid}&wine_id=#{wine.wine_id}&rating=#{wine.rating}"
           
           response = HTTParty.post(url)
-          debugger
+
         end
         
         @wine = wine
